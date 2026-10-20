@@ -165,7 +165,7 @@
       <div class="gallery">
         <figure>
           <div class="media-frame">
-            <video controls loop muted playsinline preload="metadata" aria-labelledby="animation-caption">
+            <video autoplay loop muted playsinline preload="auto" aria-labelledby="animation-caption">
               <source src="movie.mp4" type="video/mp4">
               Your browser does not support embedded video. <a href="movie.mp4">Open the animation.</a>
             </video>
@@ -237,17 +237,17 @@
       <h2 id="supplementary-title">Supplementary material</h2>
       <figure class="supplement">
         <div class="media-frame">
-          <!-- If there is speech or meaningful audio, add a WebVTT captions
-               track. Add a text description of the visual content below. -->
-          <video controls muted playsinline preload="none" aria-labelledby="supplement-caption">
+          <!-- Silent, looping illustration of the system. Add a description
+               of the visual content in the caption below. -->
+          <video autoplay loop muted playsinline preload="auto" aria-labelledby="supplement-caption">
             <source src="Supplemental_Material_1.mp4" type="video/mp4">
-            Your browser does not support embedded video. <a href="Supplemental_Material_1.mp4">Open the supplementary video.</a>
+            Your browser does not support embedded video. <a href="Supplemental_Material_1.mp4">Open the supplementary animation.</a>
           </video>
         </div>
         <figcaption id="supplement-caption">
-          <strong>Supplementary video 01</strong>
-          <!-- Add what the video demonstrates and identify its source/publication. -->
-          <a href="Supplemental_Material_1.mp4">Open supplementary video (MP4)</a>
+          <strong>Supplementary animation 01</strong>
+          <!-- Add what the animation demonstrates and identify its source/publication. -->
+          <a href="Supplemental_Material_1.mp4">Open supplementary animation (MP4)</a>
         </figcaption>
       </figure>
     </section>
