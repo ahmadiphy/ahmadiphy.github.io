@@ -1,75 +1,271 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<style>
-* {
-  box-sizing: border-box;
-}
-img {
-    max-width: 100%;
-}
-video{
-    max-width: 100%;
-}
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 5px;
-max-width: 100%;
-}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Research notes on periodic potentials, modulated liquids, and mode-coupling approaches to the glass transition, with linked publications.">
+  <title>Modulated Liquids | Research notes</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f4f7f2;
+      --surface: #ffffff;
+      --ink: #20392e;
+      --muted: #53655b;
+      --accent: #246649;
+      --line: #d6e0d5;
+    }
 
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-max-width: 100%;
-}
-</style>
-        <title>Modulated Liquids</title>
-    </head>
-    <body style="background-color:lightgreen;">
-        <h1>Modulated Liquids</h1>
-        <div class="row">
-          <div class="column">
-            <video class="video-background" autoplay loop muted playsinline>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    .container { width: min(72rem, calc(100% - 2.5rem)); margin-inline: auto; }
+    a { color: var(--accent); text-underline-offset: .2em; }
+    a:hover { text-decoration-thickness: .15em; }
+    :focus-visible { outline: 3px solid #9a4a16; outline-offset: 5px; }
+    .skip-link {
+      position: absolute;
+      top: .5rem;
+      left: 1rem;
+      z-index: 1;
+      padding: .75rem 1rem;
+      background: var(--surface);
+      transform: translateY(-200%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+    header { padding-block: 3.75rem 2.5rem; border-bottom: 1px solid var(--line); }
+    .eyebrow {
+      margin: 0 0 .75rem;
+      color: var(--accent);
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { line-height: 1.15; text-wrap: balance; }
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 400;
+      letter-spacing: -.04em;
+    }
+    .intro { max-width: 55ch; margin: 1.25rem 0 1.5rem; font-size: 1.15rem; color: var(--muted); }
+    nav ul { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 0; padding: 0; list-style: none; }
+    nav a { display: inline-block; padding-block: .6rem; font-size: .95rem; font-weight: 600; }
+    main { padding-block: 2.75rem 1rem; }
+    section { margin-bottom: 3.5rem; scroll-margin-top: 1.5rem; }
+    h2 { margin: 0 0 1.25rem; font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 600; }
+    h3 { margin: 0 0 .75rem; font-size: 1.2rem; font-weight: 600; }
+    p { margin: 0 0 1rem; }
+    .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+    figure { min-width: 0; margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); }
+    .media-frame { aspect-ratio: 4 / 3; background: #e9efe7; }
+    .media-frame img, .media-frame video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .media-frame video { background: #14231c; }
+    figcaption { padding: 1.25rem; }
+    .figure-number { display: block; margin-bottom: .35rem; color: var(--muted); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; }
+    figcaption strong { display: block; margin-bottom: .4rem; font-size: 1.05rem; }
+    figcaption p { margin-bottom: .6rem; color: var(--muted); font-size: .9rem; }
+    figcaption > a { display: inline-block; padding-block: .35rem; font-size: .9rem; }
+    .background { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+    .prose { max-width: 65ch; }
+    .prose article + article { margin-top: 1.75rem; }
+    .source { color: var(--muted); font-size: .9rem; }
+    .citation { white-space: nowrap; font-size: .85em; font-weight: 600; }
+    .supplement { max-width: 54rem; }
+    .supplement .media-frame { aspect-ratio: 16 / 9; }
+    .references { max-width: 75ch; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+    .references ol { margin: 0; padding-left: 1.5rem; }
+    .references li { padding-left: .5rem; margin-bottom: 1rem; overflow-wrap: anywhere; }
+    .references li { scroll-margin-top: 2rem; }
+    .references li:target { background: #e9efe7; outline: .4rem solid #e9efe7; }
+    footer { padding-block: 1.5rem 2rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+    footer p { margin: 0; }
+    @media (max-width: 48rem) {
+      header { padding-block: 2.5rem 1.75rem; }
+      .gallery, .background { grid-template-columns: 1fr; }
+      .background { gap: .5rem; }
+      section { margin-bottom: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="container">
+      <p class="eyebrow">Research notes</p>
+      <h1>Modulated Liquids</h1>
+      <!-- Add your name and affiliation here, if appropriate. -->
+      <p class="intro">How does a repeating external potential change a liquid’s structure and its approach to the glass transition? Explore the theoretical framework, visualizations, and background reading below.</p>
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#research">Research overview</a></li>
+          <li><a href="#light-induced-caging">Light-induced caging</a></li>
+          <li><a href="#visualizations">Visualizations</a></li>
+          <li><a href="#background">Background</a></li>
+          <li><a href="#supplementary">Supplementary material</a></li>
+          <li><a href="#references">References</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container" tabindex="-1">
+    <section id="research" class="background" aria-labelledby="research-title">
+      <h2 id="research-title">Research overview</h2>
+      <div class="prose">
+        <article>
+          <h3>A periodically structured liquid</h3>
+          <p>Abolfazl Ahmadirahmat and colleagues consider particles in a potential that repeats along one spatial direction. The equilibrium density becomes periodic, and continuous translation symmetry along that direction is reduced to a lattice symmetry. <a class="citation" href="#ref-ahmadirahmat" aria-label="Reference 3">[3]</a></p>
+        </article>
+        <article>
+          <h3>From particle motion to memory</h3>
+          <p>The theory follows generalized density correlations using exact Mori–Zwanzig equations. Particle currents are separated into components parallel and perpendicular to the modulation; a mode-coupling approximation closes the equations for the force-memory kernel. <a class="citation" href="#ref-ahmadirahmat" aria-label="Reference 3">[3]</a></p>
+        </article>
+        <article>
+          <h3>Connection to ordinary liquids</h3>
+          <p>When the modulation amplitude goes to zero, the equations recover conventional bulk mode-coupling theory. This consistency check connects the modulated theory to the familiar description of unmodulated liquids. <a class="citation" href="#ref-ahmadirahmat" aria-label="Reference 3">[3]</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="light-induced-caging" class="background" aria-labelledby="caging-title">
+      <h2 id="caging-title">Light-induced caging</h2>
+      <div class="prose">
+        <article>
+          <h3>A colloidal monolayer</h3>
+          <p>Using the theory above, the companion study models a dense colloidal monolayer as hard disks in a periodic potential that can be imposed by interfering laser beams. <a class="citation" href="#ref-caging" aria-label="Reference 4">[4]</a></p>
+        </article>
+        <article>
+          <h3>Competing cages and packing</h3>
+          <p>Neighboring particles form cages that hinder motion. The field changes cage geometry, while local packing constrains rearrangement. Their competition produces a nonmonotonic glass-transition boundary: for some parameters, moderate modulation stabilizes the liquid and melts an ideal glass. <a class="citation" href="#ref-caging" aria-label="Reference 4">[4]</a></p>
+        </article>
+        <article>
+          <h3>Tunable arrest</h3>
+          <p>The calculations vary density, modulation wavelength, and field strength. They predict repeated transitions between liquid and glassy states as the external potential is tuned, illustrating how modulation can both promote and suppress arrest. <a class="citation" href="#ref-caging" aria-label="Reference 4">[4]</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="visualizations" aria-labelledby="visualizations-title">
+      <h2 id="visualizations-title">Visualizations</h2>
+      <div class="gallery">
+        <figure>
+          <div class="media-frame">
+            <video controls loop muted playsinline preload="metadata" aria-labelledby="animation-caption">
               <source src="movie.mp4" type="video/mp4">
-              Your browser does not support the video tag.
+              Your browser does not support embedded video. <a href="movie.mp4">Open the animation.</a>
             </video>
-              *Animation is generated using <a href="https://www.manim.community/">Manim</a> library in python.
+          </div>
+          <figcaption id="animation-caption">
+            <span class="figure-number">Animation 01</span>
+            <strong>Manim animation</strong>
+            <!-- Add a short description of what changes over time and what it shows. -->
+            <p>Generated in Python using <a href="https://www.manim.community/">Manim</a>.</p>
+            <a href="movie.mp4">Open animation (MP4)</a>
+          </figcaption>
+        </figure>
 
+        <figure>
+          <div class="media-frame">
+            <!-- Provisional alt text: replace after inspecting the actual image.
+                 Describe the relevant pattern; put axes, units, conditions,
+                 and the scientific takeaway in the caption below. -->
+            <img src="particles.png" alt="Particle visualization for the modulated liquids study." loading="lazy" decoding="async">
           </div>
-          <div class="column">
-            <img src="particles.png" alt="Forest">
+          <figcaption>
+            <span class="figure-number">Figure 01</span>
+            <strong>Particle visualization</strong>
+            <!-- Add the figure's conditions and the main observation here. -->
+            <a href="particles.png">Open full-size particle figure</a>
+          </figcaption>
+        </figure>
+
+        <figure>
+          <div class="media-frame">
+            <!-- Replace this provisional alt text with an accurate visual description. -->
+            <img src="positions.png" alt="Particle positions for the modulated liquids study." loading="lazy" decoding="async">
           </div>
-          <div class="column">
-            <img src="positions.png" alt="Mountains">
-          </div>
+          <figcaption>
+            <span class="figure-number">Figure 02</span>
+            <strong>Particle positions</strong>
+            <!-- Add axes, units, conditions, and the main observation here. -->
+            <a href="positions.png">Open full-size position figure</a>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="background" class="background" aria-labelledby="background-title">
+      <h2 id="background-title">Background</h2>
+      <div class="prose">
+        <article>
+          <h3>Glass transition</h3>
+          <p>The glass transition is a gradual, reversible change in an amorphous material between a hard, relatively brittle glassy state and a viscous or rubbery state as temperature changes. Cooling a viscous liquid into a glass is called vitrification.</p>
+          <p class="source">Background reading: <a href="https://en.wikipedia.org/wiki/Glass_transition">Glass transition on Wikipedia</a>.</p>
+        </article>
+        <article>
+          <h3>Mori–Zwanzig formalism</h3>
+          <p>The Mori–Zwanzig projection formalism gives exact evolution equations for selected variables, with memory terms describing their coupling to other degrees of freedom. Approximating those memory terms produces a tractable mode-coupling description. <a class="citation" href="#ref-janssen" aria-label="Reference 2">[2]</a></p>
+          <p><a href="https://en.wikipedia.org/wiki/Mori-Zwanzig_formalism">Read an introduction to the Mori–Zwanzig formalism</a>.</p>
+        </article>
+        <article>
+          <h3>Density correlations and glassy arrest</h3>
+          <p>Correlations of density fluctuations measure how much an earlier particle arrangement is remembered. In the idealized mode-coupling description, a nonzero long-time plateau signals structural arrest; in an ergodic liquid these correlations eventually decay. <a class="citation" href="#ref-janssen" aria-label="Reference 2">[2]</a></p>
+        </article>
+        <article>
+          <h3>Theory and its limits</h3>
+          <p>Mode-coupling theory is approximate. Standard formulations omit activated rearrangements, such as particles escaping their local cages, so predicted ideal arrest should not be equated with every feature of an experimental glass. <a class="citation" href="#ref-janssen" aria-label="Reference 2">[2]</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="supplementary" aria-labelledby="supplementary-title">
+      <h2 id="supplementary-title">Supplementary material</h2>
+      <figure class="supplement">
+        <div class="media-frame">
+          <!-- If there is speech or meaningful audio, add a WebVTT captions
+               track. Add a text description of the visual content below. -->
+          <video controls muted playsinline preload="none" aria-labelledby="supplement-caption">
+            <source src="Supplemental_Material_1.mp4" type="video/mp4">
+            Your browser does not support embedded video. <a href="Supplemental_Material_1.mp4">Open the supplementary video.</a>
+          </video>
         </div>
+        <figcaption id="supplement-caption">
+          <strong>Supplementary video 01</strong>
+          <!-- Add what the video demonstrates and identify its source/publication. -->
+          <a href="Supplemental_Material_1.mp4">Open supplementary video (MP4)</a>
+        </figcaption>
+      </figure>
+    </section>
 
-        <br>
-        <p>You can find more about my research topic here.</p>
-        <h2>Glass Transition</h2>
-            <p>
-            The glass–liquid transition, or glass transition, is the gradual and reversible transition in amorphous materials (or in amorphous regions within semicrystalline materials) from a hard and relatively brittle "glassy" state into a viscous or rubbery state as the temperature is increased.
-            An amorphous solid that exhibits a glass transition is called a glass. The reverse transition, achieved by supercooling a viscous liquid into the glass state, is called vitrification. 
-            (from <a href="https://en.wikipedia.org/wiki/Glass_transition">Wikipedia</a>).
-            </p>
-        <h3><a href="https://en.wikipedia.org/wiki/Mori-Zwanzig_formalism">Mori-Zwanzig formalism</a></h3>
-        <h3>References:</h3>
-        <a href="https://doi.org/10.1103/3bmx-ldr8">Ref-1</a>
-        <a href="https://doi.org/10.1103/ks5t-xtvd">Ref-2</a>
-        <a href="https://iopscience.iop.org/article/10.1088/1742-5468/ae5c8e/meta">Ref-3</a>
-        <a href="https://academic.oup.com/book/10864">Ref-4</a>
-        <a href="https://www.frontiersin.org/articles/10.3389/fphy.2018.00097/full">Ref-5</a>
-        <br>
-        <video class="video-background" autoplay loop muted playsinline>
-              <source src="Supplemental_Material_1.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-        </video>
-        <br>
-    </body>
+    <section id="references" class="references" aria-labelledby="references-title">
+      <h2 id="references-title">References</h2>
+      <ol>
+        <li id="ref-gotze">Wolfgang Götze. <a href="https://academic.oup.com/book/10864"><cite>Complex Dynamics of Glass-Forming Liquids: A Mode-Coupling Theory</cite></a>. Oxford University Press.</li>
+        <li id="ref-janssen">Liesbeth M. C. Janssen (2018). <a href="https://www.frontiersin.org/journals/physics/articles/10.3389/fphy.2018.00097/full"><cite>Mode-Coupling Theory of the Glass Transition: A Primer</cite></a>. <i>Frontiers in Physics</i>, 6:97. DOI: <a href="https://doi.org/10.3389/fphy.2018.00097">10.3389/fphy.2018.00097</a>.</li>
+        <li id="ref-ahmadirahmat">Abolfazl Ahmadirahmat, Michele Caraglio, Vincent Krakoviack, and Thomas Franosch (2025). <a href="https://journals.aps.org/pre/abstract/10.1103/ks5t-xtvd"><cite>Mode-coupling theory of the glass transition for a liquid in a periodic potential</cite></a>. <i>Physical Review E</i>, 112, 015405. DOI: <a href="https://doi.org/10.1103/ks5t-xtvd">10.1103/ks5t-xtvd</a>.</li>
+        <li id="ref-caging">Abolfazl Ahmadirahmat, Michele Caraglio, Vincent Krakoviack, and Thomas Franosch (2025). <a href="https://journals.aps.org/pre/abstract/10.1103/3bmx-ldr8"><cite>Glass transition in colloidal monolayers controlled by light-induced caging</cite></a>. <i>Physical Review E</i>, 112, L013401. DOI: <a href="https://doi.org/10.1103/3bmx-ldr8">10.1103/3bmx-ldr8</a>.</li>
+        <li id="ref-schlothauer">Robert Schlothauer, Abolfazl Ahmadirahmat, Michele Caraglio, Vincent Krakoviack, and Thomas Franosch (2026). <a href="https://iopscience.iop.org/article/10.1088/1742-5468/ae5c8e/meta"><cite>Mode-coupling theory of the glass transition for Brownian particles in a periodic potential</cite></a>. <i>Journal of Statistical Mechanics: Theory and Experiment</i>, 2026(4), 043204. DOI: <a href="https://doi.org/10.1088/1742-5468/ae5c8e">10.1088/1742-5468/ae5c8e</a>.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>Modulated Liquids · Research notes</p>
+  </footer>
+</body>
 </html>
